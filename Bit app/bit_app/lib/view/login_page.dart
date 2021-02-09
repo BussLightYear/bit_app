@@ -20,18 +20,18 @@ class _LoginPageState extends State<LoginPage> {
     var _altura = MediaQuery.of(context).size.height;
     var _ancho = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            _BackImage(),
-            Column(
+      body: Stack(
+        children: [
+          _BackImage(),
+          SingleChildScrollView(
+            child: Column(
               children: [
                 _LogInfo(),
                 _SignUpInfo(),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -40,11 +40,16 @@ class _LoginPageState extends State<LoginPage> {
 class _BackImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var _altura = MediaQuery.of(context).size.height;
+    var _ancho = MediaQuery.of(context).size.width;
+
     return Container(
+      height: _altura,
+      width: _ancho,
       decoration: BoxDecoration(
         // color: const Color(0xff7c94b6),
         image: DecorationImage(
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.6), BlendMode.dstATop),
           image: AssetImage('assets/img/bitback.jpg'),
@@ -130,9 +135,12 @@ class _LogInfo extends StatelessWidget {
                 left: _ancho * 0.1,
               ),
               child: TextField(
+                enableSuggestions: false,
                 cursorColor: Colors.black,
+                // keyboardType: TextInputType,
                 decoration: InputDecoration(
                   // labelText: "Email",
+
                   hintText: 'Username',
                   prefixIcon: Icon(
                     Icons.person,
