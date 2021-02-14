@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:google_fonts/google_fonts.dart';
+import 'package:bit_app/presenter/build_news_view.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -9,6 +9,9 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
+  int tipoDeNoticias = 2;
+  String nombreDeVista = 'NewsList';
+
   @override
   Widget build(BuildContext context) {
     //Bloqueamos orientación
@@ -19,6 +22,8 @@ class _NewsPageState extends State<NewsPage> {
 
     var _altura = MediaQuery.of(context).size.height;
     var _ancho = MediaQuery.of(context).size.width;
+    final double _statusBarHeight = MediaQuery.of(context).padding.top;
+    final double _drawerUsefullHeight = _altura - _statusBarHeight;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -35,118 +40,219 @@ class _NewsPageState extends State<NewsPage> {
           )
         ],
       ),
-      drawer: ClipRRect(
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
-        child: Drawer(
-          elevation: 50,
-          child: SizedBox(
-            height: _altura,
-            // width: _ancho,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: _altura * 0.17,
-                  child: DrawerHeader(
-                    margin: EdgeInsets.zero,
-                    padding: EdgeInsets.zero,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: _altura * 0.05),
-                      child: SizedBox(
-                        // height: _altura * 0.1,
-                        width: _ancho * 0.45,
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: ColorFiltered(
-                            child: Image.asset('assets/img/bit.png'),
-                            colorFilter: ColorFilter.mode(
-                                Colors.black38, BlendMode.srcIn),
+      drawer: Padding(
+        padding: EdgeInsets.only(top: _statusBarHeight),
+        //Colocamos esquinas redondeades del drawer
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+          child: Drawer(
+            elevation: 50,
+            child: SizedBox(
+              height: _drawerUsefullHeight,
+              // width: _ancho,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _CabeceraBit(),
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        tipoDeNoticias = 1;
+                        nombreDeVista = 'NewsList';
+                      });
+                    },
+                    child: Text(
+                      '> All articles about Tesla from the last month, sorted by recent first',
+                      style: TextStyle(
+                        color: Colors.black45,
+                        fontSize: _ancho * 0.045,
+                      ),
+                    ),
+                  ),
+                  Separator(
+                    tamanoContexto: _drawerUsefullHeight,
+                    porcentajeDelSeparador: 0.04,
+                    axisDelSeparador: 'vertical',
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        tipoDeNoticias = 2;
+                        nombreDeVista = 'NewsList';
+                      });
+                    },
+                    child: Text(
+                      '> Top business headlines in the US right now',
+                      style: TextStyle(
+                        color: Colors.black45,
+                        fontSize: _ancho * 0.045,
+                      ),
+                    ),
+                  ),
+                  Separator(
+                    tamanoContexto: _drawerUsefullHeight,
+                    porcentajeDelSeparador: 0.04,
+                    axisDelSeparador: 'vertical',
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        tipoDeNoticias = 3;
+                        nombreDeVista = 'NewsList';
+                      });
+                    },
+                    child: Text(
+                      '> All articles mentioning Apple from yesterday, sorted by popular publishers first',
+                      style: TextStyle(
+                        color: Colors.black45,
+                        fontSize: _ancho * 0.045,
+                      ),
+                    ),
+                  ),
+                  Separator(
+                    tamanoContexto: _drawerUsefullHeight,
+                    porcentajeDelSeparador: 0.04,
+                    axisDelSeparador: 'vertical',
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        tipoDeNoticias = 4;
+                        nombreDeVista = 'NewsList';
+                      });
+                    },
+                    child: Text(
+                      '> Top headlines from TechCrunch right now',
+                      style: TextStyle(
+                        color: Colors.black45,
+                        fontSize: _ancho * 0.045,
+                      ),
+                    ),
+                  ),
+                  Separator(
+                    tamanoContexto: _drawerUsefullHeight,
+                    porcentajeDelSeparador: 0.04,
+                    axisDelSeparador: 'vertical',
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        tipoDeNoticias = 5;
+                        nombreDeVista = 'NewsList';
+                      });
+                    },
+                    child: Text(
+                      '> All articles published by the Wall Street Journal in the last 6 months, sorted by recent first',
+                      style: TextStyle(
+                        color: Colors.black45,
+                        fontSize: _ancho * 0.045,
+                      ),
+                    ),
+                  ),
+                  Separator(
+                    tamanoContexto: _drawerUsefullHeight,
+                    porcentajeDelSeparador: 0.27,
+                    axisDelSeparador: 'vertical',
+                  ),
+                  FlatButton(
+                    onPressed: () {},
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.logout,
+                        ),
+                        Separator(
+                          tamanoContexto: _ancho,
+                          porcentajeDelSeparador: 0.03,
+                          axisDelSeparador: 'horizontal',
+                        ),
+                        Text(
+                          'Log out',
+                          style: TextStyle(
+                            color: Colors.black45,
+                            fontSize: _ancho * 0.045,
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ),
-                FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    '> All articles about Bitcoint from the last month, sorted by recent first',
-                    style: TextStyle(
-                      color: Colors.black45,
-                      fontSize: _ancho * 0.045,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: _altura * 0.04,
-                ),
-                FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    '> Top business headlines in the US right now',
-                    style: TextStyle(
-                      color: Colors.black45,
-                      fontSize: _ancho * 0.045,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: _altura * 0.04,
-                ),
-                FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    '> Top headlines from TechCrunch right now',
-                    style: TextStyle(
-                      color: Colors.black45,
-                      fontSize: _ancho * 0.045,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: _altura * 0.04,
-                ),
-                FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    '> All articles published by the Wall Street Journal in the last 6 months, sorted by recent first',
-                    style: TextStyle(
-                      color: Colors.black45,
-                      fontSize: _ancho * 0.045,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: _altura * 0.38,
-                ),
-                FlatButton(
-                  onPressed: () {},
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.logout,
-                      ),
-                      SizedBox(
-                        width: _ancho * 0.03,
-                      ),
-                      Text(
-                        'Log out',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontSize: _ancho * 0.045,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.only(right: 10, left: 10),
+        child: BuildView(viewName: nombreDeVista, intNews: tipoDeNoticias),
+      ),
+    );
+  }
+}
+
+class _CabeceraBit extends StatelessWidget {
+  _CabeceraBit();
+
+  @override
+  Widget build(BuildContext context) {
+    var _altura = MediaQuery.of(context).size.height;
+    var _ancho = MediaQuery.of(context).size.width;
+    final double _statusBarHeight = MediaQuery.of(context).padding.top;
+    final double _drawerUsefullHeight = _altura - _statusBarHeight;
+
+    return SizedBox(
+      height: _drawerUsefullHeight * 0.17,
+      child: DrawerHeader(
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
+        child: Padding(
+          padding: EdgeInsets.only(top: _drawerUsefullHeight * 0.05),
+          child: SizedBox(
+            // height: _altura * 0.1,
+            width: _ancho * 0.45,
+            child: Align(
+              alignment: Alignment.topRight,
+              child: ColorFiltered(
+                child: Image.asset('assets/img/bit.png'),
+                colorFilter: ColorFilter.mode(Colors.black38, BlendMode.srcIn),
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class Separator extends StatelessWidget {
+  final double tamanoContexto;
+  final double porcentajeDelSeparador;
+  final String axisDelSeparador;
+
+  Separator(
+      {@required this.tamanoContexto,
+      @required this.porcentajeDelSeparador,
+      @required this.axisDelSeparador});
+
+  @override
+  Widget build(BuildContext context) {
+    switch (axisDelSeparador) {
+      case 'horizontal':
+        return SizedBox(
+          width: tamanoContexto * porcentajeDelSeparador,
+        );
+      case 'vertical':
+        return SizedBox(
+          height: tamanoContexto * porcentajeDelSeparador,
+        );
+
+      default:
+        return SizedBox(
+          height: tamanoContexto * porcentajeDelSeparador,
+        );
+    }
   }
 }

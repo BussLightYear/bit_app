@@ -39,6 +39,8 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class _BackImage extends StatelessWidget {
+  _BackImage();
+
   @override
   Widget build(BuildContext context) {
     var _altura = MediaQuery.of(context).size.height;
@@ -67,6 +69,8 @@ class _BackImage extends StatelessWidget {
 }
 
 class _LogInfo extends StatelessWidget {
+  _LogInfo();
+
   @override
   Widget build(BuildContext context) {
     var _altura = MediaQuery.of(context).size.height;
@@ -259,6 +263,8 @@ class _LogInfo extends StatelessWidget {
 }
 
 class _SignUpInfo extends StatelessWidget {
+  _SignUpInfo();
+
   @override
   Widget build(BuildContext context) {
     var _altura = MediaQuery.of(context).size.height;
