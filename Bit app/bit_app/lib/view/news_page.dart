@@ -9,7 +9,7 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
-  int tipoDeNoticias = 2;
+  int tipoDeNoticias = 1;
   String nombreDeVista = 'NewsList';
 
   @override

@@ -37,7 +37,7 @@ class NewsCardWidget extends StatelessWidget {
                 fit: BoxFit.cover,
                 image: noticia.urlToImage != null
                     ? NetworkImage(noticia.urlToImage)
-                    : AssetImage('assets/img/backbit.png'),
+                    : AssetImage('assets/img/bitback.jpg'),
               ),
             ),
           ),
