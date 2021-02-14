@@ -21,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     var _ancho = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
+        fit: StackFit.expand,
         children: [
           _BackImage(),
           SingleChildScrollView(
@@ -43,16 +44,22 @@ class _BackImage extends StatelessWidget {
     var _altura = MediaQuery.of(context).size.height;
     var _ancho = MediaQuery.of(context).size.width;
 
-    return Container(
+    return Positioned(
+      top: 0,
+      left: 0,
       height: _altura,
       width: _ancho,
-      decoration: BoxDecoration(
-        // color: const Color(0xff7c94b6),
-        image: DecorationImage(
-          fit: BoxFit.fill,
-          colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.6), BlendMode.dstATop),
-          image: AssetImage('assets/img/bitback.jpg'),
+      child: Container(
+        height: _altura,
+        width: _ancho,
+        decoration: BoxDecoration(
+          // color: const Color(0xff7c94b6),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.6), BlendMode.dstATop),
+            image: AssetImage('assets/img/bitback.jpg'),
+          ),
         ),
       ),
     );
@@ -117,7 +124,7 @@ class _LogInfo extends StatelessWidget {
             height: _altura * 0.01,
           ),
           Text(
-            'Please login to continue',
+            'Please log in to continue',
             style: GoogleFonts.signika(
               color: Color(0xff444a4d),
               fontWeight: FontWeight.bold,
@@ -134,28 +141,33 @@ class _LogInfo extends StatelessWidget {
                 right: _ancho * 0.1,
                 left: _ancho * 0.1,
               ),
-              child: TextField(
-                enableSuggestions: false,
-                cursorColor: Colors.black,
-                // keyboardType: TextInputType,
-                decoration: InputDecoration(
-                  // labelText: "Email",
+              child: Material(
+                elevation: 7.0,
+                shadowColor: Colors.grey,
+                borderRadius: BorderRadius.circular(22.0),
+                child: TextField(
+                  enableSuggestions: false,
+                  cursorColor: Colors.black,
+                  // keyboardType: TextInputType,
+                  decoration: InputDecoration(
+                    // labelText: "Email",
 
-                  hintText: 'Username',
-                  prefixIcon: Icon(
-                    Icons.person,
-                    color: Colors.grey,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(22.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(22.0),
-                    borderSide: BorderSide(color: Colors.black, width: 1.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(22.0),
-                    borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    hintText: 'Username',
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(22.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(22.0),
+                      borderSide: BorderSide(color: Colors.black, width: 1.0),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(22.0),
+                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    ),
                   ),
                 ),
               ),
@@ -171,22 +183,27 @@ class _LogInfo extends StatelessWidget {
                 right: _ancho * 0.1,
                 left: _ancho * 0.1,
               ),
-              child: TextField(
-                cursorColor: Colors.black,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  prefixIcon: Icon(Icons.lock_rounded, color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(22.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(22.0),
-                    borderSide: BorderSide(color: Colors.black, width: 1.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(22.0),
-                    borderSide: BorderSide(color: Colors.red, width: 1.0),
+              child: Material(
+                elevation: 7.0,
+                shadowColor: Colors.grey,
+                borderRadius: BorderRadius.circular(22.0),
+                child: TextField(
+                  cursorColor: Colors.black,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    prefixIcon: Icon(Icons.lock_rounded, color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(22.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(22.0),
+                      borderSide: BorderSide(color: Colors.black, width: 1.0),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(22.0),
+                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    ),
                   ),
                 ),
               ),
@@ -223,7 +240,7 @@ class _LogInfo extends StatelessWidget {
                   ),
                   color: Colors.white,
                   child: Text(
-                    'LOGIN',
+                    'LOG IN',
                     style: GoogleFonts.signika(
                       color: Color(0xff444a4d),
                       fontWeight: FontWeight.bold,
