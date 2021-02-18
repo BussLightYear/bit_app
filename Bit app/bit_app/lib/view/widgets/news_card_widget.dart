@@ -15,7 +15,7 @@ class NewsCardWidget extends StatelessWidget {
 
     return Container(
       width: 1,
-      height: _altura * 0.7,
+      height: _altura * 0.75,
       margin: EdgeInsets.only(top: _altura * 0.01),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -91,7 +91,7 @@ class NewsCardWidget extends StatelessWidget {
                   InkWell(
                     onTap: () {},
                     child: Text(
-                      'MORE',
+                      'MORE >',
                       style: GoogleFonts.signika(
                           fontSize: 14,
                           color: Colors.blueAccent,

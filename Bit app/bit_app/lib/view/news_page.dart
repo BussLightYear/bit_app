@@ -15,10 +15,10 @@ class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
     //Bloqueamos orientación
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]);
 
     var _altura = MediaQuery.of(context).size.height;
     var _ancho = MediaQuery.of(context).size.width;
@@ -63,6 +63,7 @@ class _NewsPageState extends State<NewsPage> {
                         tipoDeNoticias = 1;
                         nombreDeVista = 'NewsList';
                       });
+                      Navigator.pop(context);
                     },
                     child: Text(
                       '> All articles about Tesla from the last month, sorted by recent first',
@@ -83,6 +84,7 @@ class _NewsPageState extends State<NewsPage> {
                         tipoDeNoticias = 2;
                         nombreDeVista = 'NewsList';
                       });
+                      Navigator.pop(context);
                     },
                     child: Text(
                       '> Top business headlines in the US right now',
@@ -103,6 +105,7 @@ class _NewsPageState extends State<NewsPage> {
                         tipoDeNoticias = 3;
                         nombreDeVista = 'NewsList';
                       });
+                      Navigator.pop(context);
                     },
                     child: Text(
                       '> All articles mentioning Apple from yesterday, sorted by popular publishers first',
@@ -123,6 +126,7 @@ class _NewsPageState extends State<NewsPage> {
                         tipoDeNoticias = 4;
                         nombreDeVista = 'NewsList';
                       });
+                      Navigator.pop(context);
                     },
                     child: Text(
                       '> Top headlines from TechCrunch right now',
@@ -143,6 +147,7 @@ class _NewsPageState extends State<NewsPage> {
                         tipoDeNoticias = 5;
                         nombreDeVista = 'NewsList';
                       });
+                      Navigator.pop(context);
                     },
                     child: Text(
                       '> All articles published by the Wall Street Journal in the last 6 months, sorted by recent first',
@@ -187,7 +192,7 @@ class _NewsPageState extends State<NewsPage> {
       ),
       body: Padding(
         padding: EdgeInsets.only(right: 10, left: 10),
-        child: BuildView(viewName: nombreDeVista, intNews: tipoDeNoticias),
+        child: BuildView(viewName: nombreDeVista, tipoDeNew: tipoDeNoticias),
       ),
     );
   }
