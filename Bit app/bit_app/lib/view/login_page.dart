@@ -251,7 +251,12 @@ class _LogInfo extends StatelessWidget {
                       fontSize: _ancho * 0.05,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // Navigator.pushNamed(context, '/news');
+                    //pushReplacementNamed saca del "stack" a la vista actual
+                    //para que cuando demos "back" no nos lleve a la ventana actual
+                    Navigator.pushReplacementNamed(context, './news');
+                  },
                 ),
               ),
             ),

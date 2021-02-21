@@ -5,10 +5,10 @@ import 'package:bit_app/model/news_model.dart';
 
 class ApiService {
   //SelectUrl se utiliza internamente en la clase por lo que no debería exponerse por fuera
-  static String apiKey =
-      '17f56914864f402f999a9ba2732c239e'; //API key para nicolas-echeverry@hotmail.com
   // static String apiKey =
-  //     'fdf81681c9234f3cbfc26e3644fb2b08'; //API key para nicolas.echeverry@colbits.com
+  //     '17f56914864f402f999a9ba2732c239e'; //API key para nicolas-echeverry@hotmail.com
+  static String apiKey =
+      'fdf81681c9234f3cbfc26e3644fb2b08'; //API key para nicolas.echeverry@colbits.com
 
   String _selectUrl(optionUrl) {
     switch (optionUrl) {

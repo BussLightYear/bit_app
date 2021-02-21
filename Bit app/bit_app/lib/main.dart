@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: './news',
+      initialRoute: './login',
       onGenerateRoute: (setting) {
         switch (setting.name) {
           case './login':

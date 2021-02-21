@@ -5,8 +5,12 @@ import 'package:bit_app/model/news_model.dart';
 
 class NewsCardWidget extends StatelessWidget {
   final News noticia;
+  final Function(News) onTapFav;
+  final Function(News) onTapMore;
 
-  NewsCardWidget({Key key, @required this.noticia}) : super(key: key);
+  NewsCardWidget(
+      {Key key, @required this.noticia, this.onTapFav, this.onTapMore})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +18,16 @@ class NewsCardWidget extends StatelessWidget {
     var _ancho = MediaQuery.of(context).size.width;
 
     return Container(
-      width: 1,
+      // width: 1,
       height: _altura * 0.75,
-      margin: EdgeInsets.only(top: _altura * 0.01),
+      margin: EdgeInsets.only(top: _altura * 0.023),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(blurRadius: 2, spreadRadius: 2, color: Colors.black12)
-          ]),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(blurRadius: 2, spreadRadius: 2, color: Colors.black12)
+        ],
+      ),
       child: Column(
         children: [
           Container(
@@ -87,13 +92,17 @@ class NewsCardWidget extends StatelessWidget {
                 children: [
                   IconButton(
                       icon: Icon(Icons.favorite_border_outlined),
-                      onPressed: () {}),
+                      onPressed: () {
+                        onTapFav(noticia);
+                      }),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      onTapMore(noticia);
+                    },
                     child: Text(
                       'MORE >',
                       style: GoogleFonts.signika(
-                          fontSize: 14,
+                          fontSize: _altura * 0.023,
                           color: Colors.blueAccent,
                           fontWeight: FontWeight.normal),
                     ),

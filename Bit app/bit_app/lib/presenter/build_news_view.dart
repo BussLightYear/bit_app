@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:bit_app/data/news_api_service.dart';
 import 'package:bit_app/presenter/build_news_item_list.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:bit_app/view/widgets/alert_dialog.dart';
+import 'package:bit_app/view/widgets/news_exapnsion_widget.dart';
 
 class BuildView extends StatelessWidget {
-  final String viewName;
+  String viewName;
   final int tipoDeNew;
 
   BuildView({@required this.viewName, @required this.tipoDeNew});
 
   @override
   Widget build(BuildContext context) {
-    var _altura = MediaQuery.of(context).size.height;
-    var _ancho = MediaQuery.of(context).size.width;
-
-    var snapshotSaved;
-
     switch (viewName) {
       case 'NewsList':
         return Container(
@@ -25,14 +22,40 @@ class BuildView extends StatelessWidget {
               child: FutureBuilder(
                   future: ApiService().getDio(optionUrl: tipoDeNew),
                   builder: (context, snapshot) {
-                    snapshotSaved = snapshot;
                     if (snapshot.hasData) {
                       return ListView.builder(
                         itemCount: (snapshot.data).articlesList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return BuildNewsCardWidget(
-                              infoDeLaNoticia:
-                                  (snapshot.data).articlesList[index]);
+                            infoDeLaNoticia:
+                                (snapshot.data).articlesList[index],
+                            onTapFav: (news) {
+                              //Aqui colocamos todo el codigo que debe ser ejecutado luego
+                              //de interactuar con el NewsCarWidget
+                              showDialog(
+                                barrierDismissible: true,
+                                context: context,
+                                builder: (_) => AlertDial(
+                                  text:
+                                      'Are you sure you want to add this news to the favorite list?',
+                                  onPressedYes: () {},
+                                  onPressedNo: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              );
+                            },
+                            onTapMore: (news) {
+                              print(news.title);
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NewsExpand(
+                                            newsToExpand: news,
+                                          )));
+                            },
+                          );
                         },
                       );
                     } else if (snapshot.hasError) {
@@ -48,9 +71,20 @@ class BuildView extends StatelessWidget {
         );
 
       case 'NewsZoom':
+        return Container(
+          child: Text(
+            'holaaaaaaaa',
+            style: TextStyle(fontSize: 50),
+          ),
+        );
 
       case 'FavoriteList':
-        return Container();
+      // return Container(
+      //   child: Text(
+      //     'holaaaaaaaa',
+      //     style: TextStyle(fontSize: 50),
+      //   ),
+      // );
 
       //TODO: por defecto debemos retornar algo
       default:
@@ -78,7 +112,7 @@ class _SomethingWentWrongWidget extends StatelessWidget {
           ),
         ),
         Text(
-          'Ooops Something went wrong...',
+          'Ooops something went wrong...',
           style: GoogleFonts.signika(
               fontSize: _altura * 0.02,
               color: Colors.black87,

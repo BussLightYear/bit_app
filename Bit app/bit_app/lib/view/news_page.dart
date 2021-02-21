@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:bit_app/presenter/build_news_view.dart';
+import 'package:bit_app/view/widgets/alert_dialog.dart';
+import 'package:bit_app/view/widgets/app_bar.dart';
+import 'package:bit_app/view/widgets/drawer_option.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -12,33 +14,32 @@ class _NewsPageState extends State<NewsPage> {
   int tipoDeNoticias = 1;
   String nombreDeVista = 'NewsList';
 
+  static const drawerOptions = <Map<String, dynamic>>[
+    {
+      'value': 1,
+      'text':
+          'All articles about Tesla from the last month, sorted by recent first'
+    },
+    {'value': 2, 'text': 'Top business headlines in the US right now'},
+    {'value': 3, 'text': 'Top business headlines in the US right now'},
+    {'value': 4, 'text': 'Top headlines from TechCrunch right now'},
+    {
+      'value': 5,
+      'text':
+          'All articles published by the Wall Street Journal in the last 6 months, sorted by recent first'
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
-    //Bloqueamos orientación
-    // SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.portraitUp,
-    //   DeviceOrientation.portraitDown,
-    // ]);
-
     var _altura = MediaQuery.of(context).size.height;
     var _ancho = MediaQuery.of(context).size.width;
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
     final double _drawerUsefullHeight = _altura - _statusBarHeight;
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black38),
-        title: Text(
-          'BIT News',
-          style: TextStyle(color: Colors.black38),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Icon(Icons.favorite),
-          )
-        ],
+      // extendBodyBehindAppBar: true,
+      appBar: AppBarCustom(
+        appBarText: 'BIT News',
       ),
       drawer: Padding(
         padding: EdgeInsets.only(top: _statusBarHeight),
@@ -57,132 +58,49 @@ class _NewsPageState extends State<NewsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _CabeceraBit(),
-                  FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        tipoDeNoticias = 1;
-                        nombreDeVista = 'NewsList';
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      '> All articles about Tesla from the last month, sorted by recent first',
+                  //El ... descompone la lista
+                  //Basicamente recorremos todo el mapa drawerOptions
+                  //y con cada dato del mapa construimos el widget DrawerOption
+                  ...drawerOptions
+                      .map((option) => DrawerOption(
+                            text: option['text'],
+                            onTap: () {
+                              setState(() {
+                                tipoDeNoticias = option['value'];
+                                Navigator.pop(context);
+                              });
+                            },
+                          ))
+                      .toList(),
+                  SizedBox(
+                    height: _drawerUsefullHeight * 0.28,
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.logout,
+                    ),
+                    title: Text(
+                      'Log out',
                       style: TextStyle(
                         color: Colors.black45,
                         fontSize: _ancho * 0.045,
                       ),
                     ),
-                  ),
-                  Separator(
-                    tamanoContexto: _drawerUsefullHeight,
-                    porcentajeDelSeparador: 0.04,
-                    axisDelSeparador: 'vertical',
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        tipoDeNoticias = 2;
-                        nombreDeVista = 'NewsList';
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      '> Top business headlines in the US right now',
-                      style: TextStyle(
-                        color: Colors.black45,
-                        fontSize: _ancho * 0.045,
-                      ),
-                    ),
-                  ),
-                  Separator(
-                    tamanoContexto: _drawerUsefullHeight,
-                    porcentajeDelSeparador: 0.04,
-                    axisDelSeparador: 'vertical',
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        tipoDeNoticias = 3;
-                        nombreDeVista = 'NewsList';
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      '> All articles mentioning Apple from yesterday, sorted by popular publishers first',
-                      style: TextStyle(
-                        color: Colors.black45,
-                        fontSize: _ancho * 0.045,
-                      ),
-                    ),
-                  ),
-                  Separator(
-                    tamanoContexto: _drawerUsefullHeight,
-                    porcentajeDelSeparador: 0.04,
-                    axisDelSeparador: 'vertical',
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        tipoDeNoticias = 4;
-                        nombreDeVista = 'NewsList';
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      '> Top headlines from TechCrunch right now',
-                      style: TextStyle(
-                        color: Colors.black45,
-                        fontSize: _ancho * 0.045,
-                      ),
-                    ),
-                  ),
-                  Separator(
-                    tamanoContexto: _drawerUsefullHeight,
-                    porcentajeDelSeparador: 0.04,
-                    axisDelSeparador: 'vertical',
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        tipoDeNoticias = 5;
-                        nombreDeVista = 'NewsList';
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      '> All articles published by the Wall Street Journal in the last 6 months, sorted by recent first',
-                      style: TextStyle(
-                        color: Colors.black45,
-                        fontSize: _ancho * 0.045,
-                      ),
-                    ),
-                  ),
-                  Separator(
-                    tamanoContexto: _drawerUsefullHeight,
-                    porcentajeDelSeparador: 0.27,
-                    axisDelSeparador: 'vertical',
-                  ),
-                  FlatButton(
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.logout,
+                    onTap: () {
+                      showDialog(
+                        barrierDismissible: true,
+                        context: context,
+                        builder: (_) => AlertDial(
+                          text: 'Are you sure you want to log out?',
+                          onPressedYes: () {
+                            Navigator.pushReplacementNamed(context, './login');
+                          },
+                          onPressedNo: () {
+                            Navigator.pop(context);
+                          },
                         ),
-                        Separator(
-                          tamanoContexto: _ancho,
-                          porcentajeDelSeparador: 0.03,
-                          axisDelSeparador: 'horizontal',
-                        ),
-                        Text(
-                          'Log out',
-                          style: TextStyle(
-                            color: Colors.black45,
-                            fontSize: _ancho * 0.045,
-                          ),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -216,7 +134,6 @@ class _CabeceraBit extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(top: _drawerUsefullHeight * 0.05),
           child: SizedBox(
-            // height: _altura * 0.1,
             width: _ancho * 0.45,
             child: Align(
               alignment: Alignment.topRight,
@@ -229,35 +146,5 @@ class _CabeceraBit extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class Separator extends StatelessWidget {
-  final double tamanoContexto;
-  final double porcentajeDelSeparador;
-  final String axisDelSeparador;
-
-  Separator(
-      {@required this.tamanoContexto,
-      @required this.porcentajeDelSeparador,
-      @required this.axisDelSeparador});
-
-  @override
-  Widget build(BuildContext context) {
-    switch (axisDelSeparador) {
-      case 'horizontal':
-        return SizedBox(
-          width: tamanoContexto * porcentajeDelSeparador,
-        );
-      case 'vertical':
-        return SizedBox(
-          height: tamanoContexto * porcentajeDelSeparador,
-        );
-
-      default:
-        return SizedBox(
-          height: tamanoContexto * porcentajeDelSeparador,
-        );
-    }
   }
 }
