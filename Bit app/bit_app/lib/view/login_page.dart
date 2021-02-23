@@ -11,14 +11,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    //Bloqueamos orientación
-    // SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.portraitUp,
-    //   DeviceOrientation.portraitDown,
-    // ]);
-
-    var _altura = MediaQuery.of(context).size.height;
-    var _ancho = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -55,7 +47,6 @@ class _BackImage extends StatelessWidget {
         height: _altura,
         width: _ancho,
         decoration: BoxDecoration(
-          // color: const Color(0xff7c94b6),
           image: DecorationImage(
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
@@ -177,9 +168,6 @@ class _LogInfo extends StatelessWidget {
               ),
             ),
           ),
-          // SizedBox(
-          //   height: 0.00000001,
-          // ),
           Center(
             child: Padding(
               padding: EdgeInsets.only(
@@ -230,7 +218,6 @@ class _LogInfo extends StatelessWidget {
               ),
             ),
           ),
-
           Padding(
             padding: EdgeInsets.only(top: _altura * 0.05),
             child: Center(
@@ -282,7 +269,6 @@ class _SignUpInfo extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
             padding: EdgeInsets.only(

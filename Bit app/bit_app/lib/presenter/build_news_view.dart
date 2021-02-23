@@ -49,11 +49,13 @@ class BuildView extends StatelessWidget {
                               print(news.title);
 
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => NewsExpand(
-                                            newsToExpand: news,
-                                          )));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NewsExpand(
+                                    newsToExpand: news,
+                                  ),
+                                ),
+                              );
                             },
                           );
                         },
@@ -79,12 +81,6 @@ class BuildView extends StatelessWidget {
         );
 
       case 'FavoriteList':
-      // return Container(
-      //   child: Text(
-      //     'holaaaaaaaa',
-      //     style: TextStyle(fontSize: 50),
-      //   ),
-      // );
 
       //TODO: por defecto debemos retornar algo
       default:
