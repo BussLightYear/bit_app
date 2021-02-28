@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:bit_app/presenter/build_news_view.dart';
 import 'package:bit_app/view/widgets/alert_dialog.dart';
-import 'package:bit_app/view/widgets/app_bar.dart';
 import 'package:bit_app/view/widgets/drawer_option.dart';
 import 'package:scaled_animated_scaffold/scaled_animated_scaffold.dart';
+import 'package:bit_app/utils/firebaseController.dart' as AuthController;
 
 class NewsPage extends StatefulWidget {
   @override
@@ -86,7 +86,7 @@ class _NewsPageState extends State<NewsPage> {
                 builder: (_) => AlertDial(
                   text: 'Are you sure you want to log out?',
                   onPressedYes: () {
-                    Navigator.pushReplacementNamed(context, './login');
+                    AuthController.signOut(context: context);
                   },
                   onPressedNo: () {
                     Navigator.pop(context);

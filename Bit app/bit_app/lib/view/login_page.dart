@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import 'package:bit_app/utils/firebaseController.dart' as AuthController;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:bit_app/view/widgets/warning_dialog.dart' as WarnDial;
+import 'dialog_button.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,7 +12,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
+  void initState() {
+    AuthController.initialize();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var _altura = MediaQuery.of(context).size.height;
+    var _ancho = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -19,7 +28,12 @@ class _LoginPageState extends State<LoginPage> {
           SingleChildScrollView(
             child: Column(
               children: [
-                _LogInfo(),
+                GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(new FocusNode());
+                  },
+                  child: _LogInfo(),
+                ),
                 _SignUpInfo(),
               ],
             ),
@@ -59,8 +73,20 @@ class _BackImage extends StatelessWidget {
   }
 }
 
-class _LogInfo extends StatelessWidget {
+class _LogInfo extends StatefulWidget {
   _LogInfo();
+
+  @override
+  __LogInfoState createState() => __LogInfoState();
+}
+
+class __LogInfoState extends State<_LogInfo> {
+  TextEditingController _textEditingControllerEmail =
+      new TextEditingController();
+  TextEditingController _textEditingControllerPassword =
+      new TextEditingController();
+  bool eyePass = false;
+  bool LogButtonStatus = false;
 
   @override
   Widget build(BuildContext context) {
@@ -141,27 +167,21 @@ class _LogInfo extends StatelessWidget {
                 shadowColor: Colors.grey,
                 borderRadius: BorderRadius.circular(22.0),
                 child: TextField(
+                  controller: _textEditingControllerEmail,
                   enableSuggestions: false,
                   cursorColor: Colors.black,
-                  // keyboardType: TextInputType,
                   decoration: InputDecoration(
-                    // labelText: "Email",
-
                     hintText: 'Username',
                     prefixIcon: Icon(
                       Icons.person,
-                      color: Colors.grey,
+                      // color: Colors.grey,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(22.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(22.0),
-                      borderSide: BorderSide(color: Colors.black, width: 1.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(22.0),
-                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
                     ),
                   ),
                 ),
@@ -180,23 +200,32 @@ class _LogInfo extends StatelessWidget {
                 shadowColor: Colors.grey,
                 borderRadius: BorderRadius.circular(22.0),
                 child: TextField(
+                  controller: _textEditingControllerPassword,
                   cursorColor: Colors.black,
-                  obscureText: true,
+                  obscureText: eyePass == false ? true : false,
                   decoration: InputDecoration(
-                    hintText: 'Password',
-                    prefixIcon: Icon(Icons.lock_rounded, color: Colors.grey),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(22.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(22.0),
-                      borderSide: BorderSide(color: Colors.black, width: 1.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(22.0),
-                      borderSide: BorderSide(color: Colors.red, width: 1.0),
-                    ),
-                  ),
+                      hintText: 'Password',
+                      prefixIcon: Icon(
+                        Icons.lock_rounded,
+                        // color: Colors.grey,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(22.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(22.0),
+                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(eyePass == false
+                            ? Icons.remove_red_eye
+                            : Icons.remove_red_eye_outlined),
+                        onPressed: () {
+                          setState(() {
+                            eyePass = !eyePass;
+                          });
+                        },
+                      )),
                 ),
               ),
             ),
@@ -206,7 +235,19 @@ class _LogInfo extends StatelessWidget {
             child: Align(
               alignment: Alignment.topRight,
               child: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (_textEditingControllerEmail.text.isEmpty) {
+                    WarnDial.showWarningDialog(
+                        context: context,
+                        message:
+                            'Please verify the information provided and try again.');
+                  } else {
+                    AuthController.sendPasswordRecover(
+                      email: _textEditingControllerEmail.text,
+                      context: context,
+                    );
+                  }
+                },
                 child: Text(
                   'forgot password?',
                   style: GoogleFonts.signika(
@@ -238,11 +279,36 @@ class _LogInfo extends StatelessWidget {
                       fontSize: _ancho * 0.05,
                     ),
                   ),
+                  // LogButtonStatus != true
+                  //     ? Text(
+                  //         'LOG IN',
+                  //         style: GoogleFonts.signika(
+                  //           color: Color(0xff444a4d),
+                  //           fontWeight: FontWeight.bold,
+                  //           fontSize: _ancho * 0.05,
+                  //         ),
+                  //       )
+                  //     : CircularProgressIndicator(),
                   onPressed: () {
-                    // Navigator.pushNamed(context, '/news');
-                    //pushReplacementNamed saca del "stack" a la vista actual
-                    //para que cuando demos "back" no nos lleve a la ventana actual
-                    Navigator.pushReplacementNamed(context, './news');
+                    setState(() {
+                      // LogButtonStatus = !LogButtonStatus;
+                      if (_textEditingControllerEmail.text.isEmpty ||
+                          _textEditingControllerPassword.text.isEmpty) {
+                        WarnDial.showWarningDialog(
+                            context: context,
+                            message:
+                                'Please complete all fields before continuing.');
+                        // LogButtonStatus = !LogButtonStatus;
+                      } else {
+                        // LogButtonStatus = !LogButtonStatus;
+                        AuthController.signIn(
+                          email: _textEditingControllerEmail.text,
+                          password: _textEditingControllerPassword.text,
+                          context: context,
+                        );
+                        AuthController.stateFirebase(context);
+                      }
+                    });
                   },
                 ),
               ),
@@ -304,7 +370,9 @@ class _SignUpInfo extends StatelessWidget {
                     fontSize: _ancho * 0.05,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, './registration');
+                },
               ),
             ),
           ),

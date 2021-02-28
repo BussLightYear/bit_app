@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import './view/login_page.dart';
 import './view/news_page.dart';
+import 'package:bit_app/view/register.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -26,6 +29,9 @@ class _MyAppState extends State<MyApp> {
 
           case './news':
             return MaterialPageRoute(builder: (context) => new NewsPage());
+
+          case './registration':
+            return MaterialPageRoute(builder: (context) => new RegisterUser());
 
           default:
             return null;

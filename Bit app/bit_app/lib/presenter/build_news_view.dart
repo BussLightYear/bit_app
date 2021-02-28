@@ -72,14 +72,6 @@ class BuildView extends StatelessWidget {
           ),
         );
 
-      case 'NewsZoom':
-        return Container(
-          child: Text(
-            'holaaaaaaaa',
-            style: TextStyle(fontSize: 50),
-          ),
-        );
-
       case 'FavoriteList':
 
       //TODO: por defecto debemos retornar algo
@@ -96,25 +88,28 @@ class _SomethingWentWrongWidget extends StatelessWidget {
     var _ancho = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsets.only(top: _altura * 0.25),
-      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        Container(
-          height: _altura * 0.4,
-          width: _ancho,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              //OJO que esta imagen no tiene referencia como tal, como es una app privada no deberíamos tener problemas
-              image: AssetImage('assets/img/went_wrong.png'),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            height: _altura * 0.4,
+            width: _ancho,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                //OJO que esta imagen no tiene referencia como tal, como es una app privada no deberíamos tener problemas de autor
+                image: AssetImage('assets/img/went_wrong.png'),
+              ),
             ),
           ),
-        ),
-        Text(
-          'Ooops something went wrong...',
-          style: GoogleFonts.signika(
-              fontSize: _altura * 0.02,
-              color: Colors.black87,
-              fontWeight: FontWeight.normal),
-        ),
-      ]),
+          Text(
+            'Ooops something went wrong...',
+            style: GoogleFonts.signika(
+                fontSize: _altura * 0.02,
+                color: Colors.black87,
+                fontWeight: FontWeight.normal),
+          ),
+        ],
+      ),
     );
   }
 }
